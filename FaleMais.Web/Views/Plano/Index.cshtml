@@ -1,0 +1,162 @@
+﻿@model FaleMais.Web.Models.PlanoViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+@*<div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Origem</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Plano</th>
+                    <th scope="col">Tempo</th>
+                    <th scope="col">C/FaleMais</th>
+                    <th scope="col">S/FaleMais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DropDownListFor(model => model.AreaCodeEdit.Id, Model.Source, "Select type", new { @class = "form-control", @id = "Source" })
+                        @Html.ValidationMessageFor(model => model.Source)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.AreaCodeEdit.Id, Model.Destiny, "Select type", new { @class = "form-control", @id = "Destiny" })
+                        @Html.ValidationMessageFor(model => model.Destiny)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.PlanEdit.Id, Model.Plans, "Select type", new { @class = "form-control", @id = "Plan" })
+                        @Html.ValidationMessageFor(model => model.Plans)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control", @id = "Time" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ValueWithPlan, new { htmlAttributes = new { @class = "form-control", @id = "ValueWithPlan" } })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ValueWithOutPlan, new { htmlAttributes = new { @class = "form-control", @id = "ValueWithOutPlan" } })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+
+@using (Html.BeginForm("Edit", "Plano", FormMethod.Post, new { @formFaleMais = "formFaleMais", @id = "formteste" }))
+{
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Origem</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Plano</th>
+                <th scope="col">Tempo</th>
+                <th scope="col">C/FaleMais</th>
+                <th scope="col">S/FaleMais</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(model => model.AreaCodeEdit.Id, Model.Source, "Select type", new { @class = "form-control", @id = "Source" })
+                    @Html.ValidationMessageFor(model => model.Source)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.AreaCodeEdit.Id, Model.Destiny, "Select type", new { @class = "form-control", @id = "Destiny" })
+                    @Html.ValidationMessageFor(model => model.Destiny)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.PlanEdit.Id, Model.Plans, "Select type", new { @class = "form-control", @id = "Plan" })
+                    @Html.ValidationMessageFor(model => model.Plans)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.Time, new { htmlAttributes = new { @class = "form-control", @id = "Time" } })
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.ValueWithPlan, new { htmlAttributes = new { @class = "form-control", @id = "ValueWithPlan" } })
+                </td>
+                <td>
+                    @Html.EditorFor(model => model.ValueWithOutPlan, new { htmlAttributes = new { @class = "form-control", @id = "ValueWithOutPlan" } })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+
+        var _source = "";
+        var _destino = "";
+        var _plan = "";
+        var _time = "";
+
+        $("#Source").change(function () {
+            debugger;
+            _source = $("#Source").val();
+            _destino = $("#Destiny").val();
+            _plan = $("#Plan").val();
+
+            var myData = $("#formteste").serializeArray();
+
+            @*$.ajax({
+                url: '@Url.Action("Index", "Plano")',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                type: "Post",
+                cache: false,
+                data: $("#formteste").serializeArray(),
+                success: function (data) { alert('OK'); },
+                erro: function () { alert("Erro"); }
+            });*@
+
+
+            @*$.get('@Url.Action("Calcular", "Plano")', { Source: _source, Destiny: _destino, Plan: _plan },
+                function (data) {
+                    if (data.Type == 'success') {
+                        alert("OK");
+                    }
+                });*@
+
+            $.ajax({
+                url: '@Url.Action("Calcular", "Plano")' + '?Source=' + _source + '&Destiny=' + _destino + '&Plan=' + _plan,
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                type: "Get",
+                cache: false,                
+                success: function (data) {
+                    if (data.Type == "success") {
+                        alert("OK");
+                    }
+                },
+                erro: function () { alert("Erro"); }
+            });
+
+
+           
+
+        });
+
+        $("#Destiny").change(function () {
+            _source = $("#Source").val();
+            _destino = $("#Destiny").val();
+            _plan = $("#Plan").val();
+        });
+
+        $("#Plan").change(function () {
+            _source = $("#Source").val();
+            _destino = $("#Destiny").val();
+            _plan = $("#Plan").val();
+        });
+    });
+
+
+</script>
+
+
