@@ -7,7 +7,8 @@ namespace FaleMais.UI.Models
     public class PlanViewModel
     {
         public Plan PlanEdit { get; set; }
-        public AreaCode AreaCodeEdit { get; set; }
+        public AreaCodeSource AreaCodeSourceEdit { get; set; }
+        public AreaCodeDestiny AreaCodeDestinyEdit { get; set; }
 
         public int Time { get; set; }
         [Required]
@@ -18,9 +19,9 @@ namespace FaleMais.UI.Models
         public SelectList Plans { get; set; }
 
         [DataType(DataType.Currency)]
-        public decimal ValueWithOutPlan { get; set; }
+        public decimal Value { get; set; }
 
         [DataType(DataType.Currency)]
-        public decimal ValueWithPlan { get; set; }
+        public decimal ValueWith { get; set; }
     }
 }

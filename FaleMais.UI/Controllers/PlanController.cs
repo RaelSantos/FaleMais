@@ -1,35 +1,61 @@
-﻿using FaleMais.Dominio.User.Repositories;
+﻿using FaleMais.Dominio.User.Entities;
+using FaleMais.Dominio.User.Repositories;
 using FaleMais.UI.Models;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FaleMais.UI.Controllers
 {
     public class PlanController : Controller
     {
-        private readonly IPlanRepository _context;
-        private readonly IAreaCodeRepository _contextAreaCode;
+        #region ['Context']
+        private readonly IPlanRepository _contextPlan;        
+        private readonly IAreaCodeSourceRepository _contextAreaCodeSource;
+        private readonly IAreaCodeDestinyRepository _contextAreaCodeDestiny;
+        private readonly IAreaCodeValueMinuteRepository _contextAreaCodeValueMinute;
 
-        public PlanController(IPlanRepository context, IAreaCodeRepository contextAreaCode)
+        #endregion
+
+        #region ['Ctor']
+        public PlanController(IPlanRepository contextPlan, IAreaCodeSourceRepository contextAreaCodeSource, IAreaCodeDestinyRepository contextAreaCodeDestiny, IAreaCodeValueMinuteRepository contextAreaCodeValueMinute)
         {
-            _context = context;
-            _contextAreaCode = contextAreaCode;
+            _contextPlan = contextPlan;
+            _contextAreaCodeSource = contextAreaCodeSource;
+            _contextAreaCodeDestiny = contextAreaCodeDestiny;
+            _contextAreaCodeValueMinute = contextAreaCodeValueMinute;
 
         }
+
+        #endregion
+
         // GET: Plan
         public ActionResult Index()
         {
-            var _sourceAndDestiny = _contextAreaCode.GetAllAreaCode();
-
             PlanViewModel _vm = new PlanViewModel();
-            _vm.Plans = new SelectList(_context.GetAllPlan(), "Id", "Name");
-            _vm.Source = new SelectList(_sourceAndDestiny, "Id", "Code");
-            _vm.Destiny = new SelectList(_sourceAndDestiny, "Id", "Code");
+            _vm.Plans = new SelectList(_contextPlan.GetAll(), "Id", "Name");
+            _vm.Source = new SelectList(_contextAreaCodeSource.GetAll(), "Id", "Code");
+            _vm.Destiny = new SelectList(_contextAreaCodeDestiny.GetAll(), "Id", "Code");
 
             return View(_vm);
         }
-    }
+
+        public JsonResult Calculate(string sourceId, string destinyId, string planId, string time)
+        {
+            try
+            {
+                var _areaCodeValueMin = _contextAreaCodeValueMinute.ValueMin(int.Parse(sourceId), int.Parse(destinyId));
+                var _plan = _contextPlan.GetById(int.Parse(planId));
+                var _speakMore = SpeakMore.CalculateRate(_areaCodeValueMin, _plan, int.Parse(time));
+
+                var json = JsonConvert.SerializeObject(_speakMore);
+
+                return Json(json, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json( new { error = true, responseText = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+    }   
 }

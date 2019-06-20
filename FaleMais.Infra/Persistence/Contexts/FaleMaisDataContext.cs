@@ -6,20 +6,24 @@ namespace FaleMais.Infra.Persistence.Contexts
 {
     public class FaleMaisDataContext : DbContext
     {
-        public FaleMaisDataContext() : base("FaleMaisConnectionString")
+        public FaleMaisDataContext() : base("FaleMais")
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
 
-        public DbSet<AreaCode> AreaCodes { get; set; }
+       
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<AreaCodeSource> AreaCodeSources { get; set; }
+        public DbSet<AreaCodeDestiny> AreaCodeDestinys { get; set; }
+        public DbSet<AreaCodeValueMinute> AreaCodeValueMinutes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new AreaCodeMapping());
             modelBuilder.Configurations.Add(new PlanMapping());
+            modelBuilder.Configurations.Add(new AreaCodeSourceMapping());
+            modelBuilder.Configurations.Add(new AreaCodeDestinyMapping());
+            modelBuilder.Configurations.Add(new AreaCodeValueMinuteMapping());
         }
-
     }
 }

@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,21 +47,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="User\Entities\AreaCode.cs" />
+    <Compile Include="User\Entities\AreaCodeDestiny.cs" />
+    <Compile Include="User\Entities\AreaCodeSource.cs" />
+    <Compile Include="User\Entities\AreaCodeValueMinute.cs" />
     <Compile Include="User\Entities\Plan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User\Repositories\IAreaCodeRepository.cs" />
+    <Compile Include="User\Entities\SpeakMore.cs" />
+    <Compile Include="User\Repositories\IAreaCodeDestinyRepository.cs" />
+    <Compile Include="User\Repositories\IAreaCodeSourceRepository.cs" />
+    <Compile Include="User\Repositories\IAreaCodeValueMinuteRepository.cs" />
     <Compile Include="User\Repositories\IPlanRepository.cs" />
-    <Compile Include="User\Services\IAreaCodeApplicationService.cs" />
+    <Compile Include="User\Scopes\AreaCodeSourceScope.cs" />
+    <Compile Include="User\Scopes\PlanScope.cs" />
+    <Compile Include="User\Services\IAreaCodeDestinyApplicationService.cs" />
+    <Compile Include="User\Services\IAreaCodeSourceApplicationService.cs" />
     <Compile Include="User\Services\IPlanApplicationService.cs" />
+    <Compile Include="User\Specs\AreaCodeDestinySpecs.cs" />
+    <Compile Include="User\Specs\AreaCodeSourceSpecs.cs" />
+    <Compile Include="User\Specs\AreaCodeValueMinuteSpecs.cs" />
+    <Compile Include="User\Specs\PlanSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="User\Commands\UserCommands\" />
     <Folder Include="User\Enums\" />
     <Folder Include="User\Events\UserEvents\" />
     <Folder Include="User\Handlers\UserHandlers\" />
-    <Folder Include="User\Scopes\" />
-    <Folder Include="User\Specs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

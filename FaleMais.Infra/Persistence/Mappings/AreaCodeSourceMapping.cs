@@ -4,21 +4,17 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace FaleMais.Infra.Persistence.Mappings
 {
-    public class PlanMapping : EntityTypeConfiguration<Plan>
+    public class AreaCodeSourceMapping : EntityTypeConfiguration<AreaCodeSource>
     {
-        public PlanMapping()
+        public AreaCodeSourceMapping()
         {
-            ToTable("Plan");
+            ToTable("AreaCodeSource");
 
             HasKey(x => x.Id);
             Property(x => x.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
-            Property(x => x.Name).IsRequired().HasMaxLength(50);
-
-            Property(x => x.Minute).IsRequired();
-
-
+            Property(x => x.Code).IsRequired().HasMaxLength(3);
         }
     }
 }

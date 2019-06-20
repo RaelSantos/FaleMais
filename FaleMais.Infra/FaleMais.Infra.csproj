@@ -44,10 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Persistence\Contexts\FaleMaisDataContext.cs" />
-    <Compile Include="Persistence\Mappings\AreaCodeMapping.cs" />
+    <Compile Include="Persistence\Mappings\AreaCodeDestinyMapping.cs" />
+    <Compile Include="Persistence\Mappings\AreaCodeSourceMapping.cs" />
+    <Compile Include="Persistence\Mappings\AreaCodeValueMinuteMapping.cs" />
     <Compile Include="Persistence\Mappings\PlanMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\User\AreaCodeRepository.cs" />
+    <Compile Include="Repositories\User\AreaCodeDestinyRepository.cs" />
+    <Compile Include="Repositories\User\AreaCodeSourceRepository.cs" />
+    <Compile Include="Repositories\User\AreaCodeValueMinuteRepository.cs" />
     <Compile Include="Repositories\User\PlanRepository.cs" />
     <Compile Include="Transaction\IUnitOfWork.cs" />
     <Compile Include="Transaction\UnitOfWork.cs" />
